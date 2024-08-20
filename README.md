@@ -14,24 +14,15 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
 
 Google Cloud Plataform
 
-  °Big Query ---------------------> Data Warehouse
-  °Compute Engine ----------------> Hospedagem do Airflow
-  °Airflow -----------------------> Orquestrador dos Jobs
-  °Cloud Functions ---------------> Extração da Aplicação para o Bucket
-  °DataFlow ----------------------> Jobs do Buket até O BigQuery
-  °MySQL -------------------------> tabela de controle
-  °Secret Manager ----------------> gerenciar os segredos
-  °PowerBI -----------------------> visualização de painél de indicadores do Datamart
-
 | Recurso               | Finalidade                                          
 |----------------------|-----------------------------------------------------
-| <kbd>Big Query  /authenticate</kbd>     | Data Warehouse 
-| <kbd>Compute Engine /authenticate</kbd>     | Hospedagem do Airflow
-| <kbd>Airflow  /authenticate</kbd>     | Orquestrador dos Jobs
-| <kbd>Cloud Functions /authenticate</kbd>     | Extração da Aplicação para o Bucket
-| <kbd>DataFlow  /authenticate</kbd>     | Jobs do Buket até O BigQuery
-| <kbd>MySQL /authenticate</kbd>     | Tabela de controle
-| <kbd>Secret Manager  /authenticate</kbd>     | Gerenciar os segredos
-| <kbd>PowerBI /authenticate</kbd>     | Visualização de painél de indicadores do Datamart
+| <kbd>Big Query</kbd>     | Data Warehouse 
+| <kbd>Compute Engine</kbd>     | Hospedagem do Airflow
+| <kbd>Airflow</kbd>     | Orquestrador dos Jobs
+| <kbd>Cloud Functions</kbd>     | Extração da Aplicação para o Bucket
+| <kbd>DataFlow</kbd>     | Jobs do Buket até O BigQuery
+| <kbd>MySQL</kbd>     | Tabela de controle
+| <kbd>Secret Manager</kbd>     | Gerenciar os segredos
+| <kbd>PowerBI</kbd>     | Visualização de painél de indicadores do Datamart
 
 
