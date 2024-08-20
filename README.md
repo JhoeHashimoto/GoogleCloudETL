@@ -11,6 +11,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
 
 ![image](https://github.com/user-attachments/assets/c8fbf4d3-413b-4e82-b09c-aeeea1a638c5)
 
+[Link para o Miro Board](https://miro.com/app/board/uXjVKoI0Df8=/?diagramming=)
 
 <h2 id="technologies"> TÉCNOLOGIAS </h2>   
 
