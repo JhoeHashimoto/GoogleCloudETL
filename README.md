@@ -25,7 +25,9 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
 | <kbd>DataFlow</kbd>     | Jobs do Buket até O BigQuery
 | <kbd>MySQL</kbd>     | Tabela de controle
 | <kbd>Secret Manager</kbd>     | Gerenciar os segredos
+| <kbd>Cloud Functions</kbd>     | Ingestão de Produção (Bucket 2 Bucket)
 | <kbd>PowerBI</kbd>     | Visualização de painél de indicadores do Datamart
+
 
 
 
