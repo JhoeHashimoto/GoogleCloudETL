@@ -22,3 +22,16 @@ Google Cloud Plataform
   °MySQL -------------------------> tabela de controle
   °Secret Manager ----------------> gerenciar os segredos
   °PowerBI -----------------------> visualização de painél de indicadores do Datamart
+
+| Recurso               | Finalidade                                          
+|----------------------|-----------------------------------------------------
+| <kbd>Big Query  /authenticate</kbd>     | Data Warehouse 
+| <kbd>Compute Engine /authenticate</kbd>     | Hospedagem do Airflow
+| <kbd>Airflow  /authenticate</kbd>     | Orquestrador dos Jobs
+| <kbd>Cloud Functions /authenticate</kbd>     | Extração da Aplicação para o Bucket
+| <kbd>DataFlow  /authenticate</kbd>     | Jobs do Buket até O BigQuery
+| <kbd>MySQL /authenticate</kbd>     | Tabela de controle
+| <kbd>Secret Manager  /authenticate</kbd>     | Gerenciar os segredos
+| <kbd>PowerBI /authenticate</kbd>     | Visualização de painél de indicadores do Datamart
+
+
