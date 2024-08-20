@@ -25,3 +25,9 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
 | <kbd>PowerBI</kbd>     | Visualização de painél de indicadores do Datamart
 
 
+<h2 id="arquitetura"> ARQUITETURA </h2>
+
+![image](https://github.com/user-attachments/assets/76a4f4b0-4b24-417f-a161-ad45bd7ab7dc)
+
+
+
