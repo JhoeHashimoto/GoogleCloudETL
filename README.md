@@ -27,7 +27,8 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
 
 <h2 id="arquitetura"> ARQUITETURA </h2>
 
-![image](https://github.com/user-attachments/assets/76a4f4b0-4b24-417f-a161-ad45bd7ab7dc)
+![image](https://github.com/user-attachments/assets/c8fbf4d3-413b-4e82-b09c-aeeea1a638c5)
+
 
 
 
