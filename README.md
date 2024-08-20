@@ -8,9 +8,8 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
 
 
 
-<h2 id="technologies">💻 TÉCNOLOGIAS </h2>
+<h2 id="technologies">💻 TÉCNOLOGIAS </h2>    [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
 
 | Recurso               | Finalidade                                          
