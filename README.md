@@ -7,6 +7,9 @@ Repositório para criação de um Pipeline na ![Google Cloud](https://img.shield
 
 Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
 
+<h2 id="arquitetura"> ARQUITETURA </h2>
+
+![image](https://github.com/user-attachments/assets/c8fbf4d3-413b-4e82-b09c-aeeea1a638c5)
 
 
 <h2 id="technologies"> TÉCNOLOGIAS </h2>   
@@ -23,11 +26,6 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
 | <kbd>MySQL</kbd>     | Tabela de controle
 | <kbd>Secret Manager</kbd>     | Gerenciar os segredos
 | <kbd>PowerBI</kbd>     | Visualização de painél de indicadores do Datamart
-
-
-<h2 id="arquitetura"> ARQUITETURA </h2>
-
-![image](https://github.com/user-attachments/assets/c8fbf4d3-413b-4e82-b09c-aeeea1a638c5)
 
 
 
