@@ -12,7 +12,6 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-Google Cloud Plataform
 
 | Recurso               | Finalidade                                          
 |----------------------|-----------------------------------------------------
