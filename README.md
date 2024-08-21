@@ -39,13 +39,14 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
  <li><h3>CARGA FULL</h3></li>
  <br></br>
  <li><h3>CARGA INCREMENTAL</h3></li>
+ 
      °Utilização do Campo _ModifiedDate_ 
      °Delete Físico
  
-     | Recurso               | Finalidade                                          
-     |----------------------|-----------------------------------------------------
-     | <kbd>INSERT</kbd>     | When no matched by _target_ - **INSERT** 
+     | CASO                         | OPERACAO                                          
+     |------------------------------|-----------------------------------------------------
+     | <kbd>INSERT</kbd>            | When no matched by _target_ - **INSERT** 
      | <kbd>UPDATE Engine</kbd>     | When matched source = target - **UPDATE**
-     | <kbd>DELETE</kbd>     | When not matched by _source_ - **DELETE**
+     | <kbd>DELETE</kbd>            | When not matched by _source_ - **DELETE**
         
 </ul>
