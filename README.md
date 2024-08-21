@@ -33,3 +33,9 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
 
 
 
+<h2 id="ingestão"> INGESTÃO </h2>   
+
+<ul>
+ <li><h3>CARGA FULL</h3></li>
+ <li><h3>CARGA INCREMENTAL</h3></li>
+</ul>
