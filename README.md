@@ -39,14 +39,27 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
  <li><h3>CARGA FULL</h3></li>
  <br></br>
  <li><h3>CARGA INCREMENTAL</h3></li>
- 
-     °Utilização do Campo _ModifiedDate_ 
-     °Delete Físico
+</ul> 
+     - [ x ] Utilização do Campo _ModifiedDate_
+     - [ x ] Delete Físico
+     
+   <h4>°PRIMARY KEY</h4>
+
+| Flat File               | PK                                          
+|----------------------|-----------------------------------------------------
+| <kbd>Sales.SpecialOfferProduct.csv</kbd>     | ProductID 
+| <kbd>Sales.SalesOrderHeader.csv</kbd>     | SalesOrderID
+| <kbd>Sales.Sales.OrderDetail.csv</kbd>     | SalesOrderDetailID 
+| <kbd>Sales.Customer.csv</kbd>     | CustomerID ou AccountNumber
+| <kbd>Production.Product.csv</kbd>     | ProductNumber
+| <kbd>Person.Person.csv</kbd>     | BusinessEntityID
+     
+   <h4>MERGE</h4>
  
      | CASO                         | OPERACAO                                          
      |------------------------------|-----------------------------------------------------
-     | <kbd>INSERT</kbd>            | When no matched by _target_ - **INSERT** 
-     | <kbd>UPDATE Engine</kbd>     | When matched source = target - **UPDATE**
-     | <kbd>DELETE</kbd>            | When not matched by _source_ - **DELETE**
+     | INSERT                       | When no matched by _target_ - **INSERT** 
+     | UPDATE                       |  When matched source = target - **UPDATE**
+     | DELETE                       | When not matched by _source_ - **DELETE**
         
-</ul>
+
