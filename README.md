@@ -41,6 +41,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
  <li><h3>CARGA INCREMENTAL</h3></li>
      °Utilização do Campo _ModifiedDate_ 
      °Delete Físico
+ 
      | Recurso               | Finalidade                                          
      |----------------------|-----------------------------------------------------
      | <kbd>INSERT</kbd>     | When no matched by _target_ - **INSERT** 
