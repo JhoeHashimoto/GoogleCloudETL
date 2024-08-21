@@ -40,8 +40,8 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
  <br></br>
  <li><h3>CARGA INCREMENTAL</h3></li>
 </ul> 
-     - [ x ] Utilização do Campo _ModifiedDate_
-     - [ x ] Delete Físico
+     -[ x ] Utilização do Campo _ModifiedDate_
+     -[ x ] Delete Físico
      
    <h4>°PRIMARY KEY</h4>
 
