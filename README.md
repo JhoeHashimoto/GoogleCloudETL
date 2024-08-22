@@ -23,7 +23,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 | <kbd>Compute Engine</kbd>     | Hospedagem do Airflow
 | <kbd>Airflow</kbd>     | Orquestrador dos Jobs
 | <kbd>Cloud Functions</kbd>     | Extração da Aplicação para o Bucket
-| <kbd>DataFlow</kbd>     | Jobs do Buket até O BigQuery
+| <kbd>DataFlow</kbd>     | Jobs do Bucket até O BigQuery
 | <kbd>MySQL</kbd>     | Tabela de controle
 | <kbd>Secret Manager</kbd>     | Gerenciar os segredos
 | <kbd>Cloud Functions</kbd>     | Ingestão de Produção (Bucket 2 Bucket)
