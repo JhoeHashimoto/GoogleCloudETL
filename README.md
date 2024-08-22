@@ -51,13 +51,15 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 
 | Flat File               | PK                                          
 |----------------------|-----------------------------------------------------
-| <kbd>Sales.SpecialOfferProduct.csv</kbd>     | ProductID 
+| <kbd>Sales.SpecialOfferProduct.csv</kbd>     | SpecialOfferID e ProductID 
 | <kbd>Sales.SalesOrderHeader.csv</kbd>     | SalesOrderID
 | <kbd>Sales.Sales.OrderDetail.csv</kbd>     | SalesOrderDetailID 
 | <kbd>Sales.Customer.csv</kbd>     | CustomerID ou AccountNumber
 | <kbd>Production.Product.csv</kbd>     | ProductNumber
 | <kbd>Person.Person.csv</kbd>     | BusinessEntityID
-     
+
+
+[Link para a Modelagem](https://miro.com/app/board/uXjVKnpgvfI=/)
    <h4>MERGE</h4>
  
      | CASO                         | OPERACAO                                          
