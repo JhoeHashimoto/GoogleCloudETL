@@ -40,8 +40,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 
 - [x] TRUNCATE TRUSTED
 - [x] INSERT
- 
- <br></br>
+
  <li><h3>CARGA INCREMENTAL</h3></li>
 </ul> 
 
