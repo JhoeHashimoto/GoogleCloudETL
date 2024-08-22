@@ -60,7 +60,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
      | CASO                         | OPERACAO                                          
      |------------------------------|-----------------------------------------------------
      | INSERT                       | When no matched by _target_ - **INSERT** 
-     | UPDATE                       |  When matched source = target - **UPDATE**
+     | UPDATE                       | When matched source = target - **UPDATE**
      | DELETE                       | When not matched by _source_ - **DELETE**
         
 
