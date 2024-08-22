@@ -5,7 +5,7 @@ Repositório para criação de um Pipeline na ![Google Cloud](https://img.shield
 
 <h2 id="objetivo"> OBJETIVO </h2>
 
-Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
+Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 
 <h2 id="arquitetura"> ARQUITETURA </h2>
 
@@ -41,7 +41,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
  <li><h3>CARGA INCREMENTAL</h3></li>
 </ul> 
 
-- [x] Utilização do Campo _ModifiedDate_
+- [x] Utilização do campo _ModifiedDate_
 - [x] Delete Físico
 
    <h4>°PRIMARY KEY</h4>
@@ -63,4 +63,17 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Visualization
      | UPDATE                       |  When matched source = target - **UPDATE**
      | DELETE                       | When not matched by _source_ - **DELETE**
         
+
+<h2 id="return"> INDICADORES DO DATAMART VENDAS </h2>
+
+- [ ] Contagem de Ordens de Pedido que possuem mais de 3 produtos
+- [ ] 3 Produtos mais vendidos de acordo com lead time de produção de cada produto
+- [ ] Quantidade de Pedidos por Cliente
+- [ ] Quantidade de Produtos Vendidos na data de colocação
+- [ ] Titulos que estão a vencer no mês 09/11 com valor maior que $1.000
+
+
+
+
+
 
