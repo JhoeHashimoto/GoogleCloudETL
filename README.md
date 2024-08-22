@@ -70,7 +70,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 <h2 id="return"> INDICADORES DO DATAMART VENDAS </h2>
 
 - [ ] Contagem de Ordens de Pedido que possuem mais de 3 produtos
-- [ ] 3 Produtos mais vendidos de acordo com lead time de produção de cada produto
+- [ ] 3 Produtos mais vendidos de cada item a partir da listagem de lead time de produção (dia)
 - [ ] Quantidade de Pedidos por Cliente
 - [ ] Quantidade de Produtos Vendidos na data de colocação
 - [ ] Titulos que estão a vencer no mês 09/11 com valor maior que $1.000
