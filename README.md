@@ -19,12 +19,12 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 
 | Recurso               | Finalidade                                          
 |----------------------|-----------------------------------------------------
-| <kbd>Big Query</kbd>     | Data Warehouse 
+| <kbd>Big Query</kbd>     | Data Lakehouse 
 | <kbd>Compute Engine</kbd>     | Hospedagem do Airflow
 | <kbd>Airflow</kbd>     | Orquestrador dos Jobs
 | <kbd>Cloud Functions</kbd>     | Extração da Aplicação para o Bucket
 | <kbd>DataFlow</kbd>     | Jobs do Bucket até O BigQuery
-| <kbd>MySQL</kbd>     | Tabela de controle
+| <kbd>MySQL</kbd>     | Banco usado para a tabela de controle
 | <kbd>Secret Manager</kbd>     | Gerenciar os segredos
 | <kbd>Cloud Functions</kbd>     | Ingestão de Produção (Bucket 2 Bucket)
 | <kbd>PowerBI</kbd>     | Visualização de painél de indicadores do Datamart
@@ -54,7 +54,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 | <kbd>Sales.SpecialOfferProduct.csv</kbd>     | SpecialOfferID e ProductID 
 | <kbd>Sales.SalesOrderHeader.csv</kbd>     | SalesOrderID
 | <kbd>Sales.Sales.OrderDetail.csv</kbd>     | SalesOrderDetailID 
-| <kbd>Sales.Customer.csv</kbd>     | CustomerID ou AccountNumber
+| <kbd>Sales.Customer.csv</kbd>     | CustomerID
 | <kbd>Production.Product.csv</kbd>     | ProductNumber
 | <kbd>Person.Person.csv</kbd>     | BusinessEntityID
 
@@ -75,7 +75,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 - [ ] 3 Produtos mais vendidos de cada item a partir da listagem de lead time de produção (dia)
 - [ ] Quantidade de Pedidos por Cliente
 - [ ] Quantidade de Produtos Vendidos na data de colocação
-- [ ] Titulos que estão a vencer no mês 09/11 com valor maior que $1.000
+- [ ] Pedidos que estão a vencer no mês 09/11 com valor maior que $1.000
 
 
 
