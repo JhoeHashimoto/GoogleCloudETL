@@ -35,6 +35,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 - [x] flatfile_create_table: Cria as tabelas do BigQuery (Inicializada apenas uma vez, deve permanecer desligada)
 - [x] flatfile_load_transform_data: Faz a carga e transformação dos dados da origem até o BigQuery
 - [x] refined_datamart: Cria as tabelas do datamart na camada REFINED
+![airflow]("https://raw.githubusercontent.com/JhoeHashimoto/GoogleCloudETL/main/Captura%20de%20tela%202024-09-05%20124606.png")
 
 
 <h2 id="ingestão"> INGESTÃO </h2>   
