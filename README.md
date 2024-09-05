@@ -30,12 +30,10 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 | <kbd>PowerBI</kbd>     | Visualização de painél de indicadores do Datamart
 
 <h2 id="ingestão"> AIRFLOW </h2>
-<h3>DAGS</h3>
-Há 3 DAGS dentro da esteira de dados
-- flatfile_create_table: Cria as tabelas do BigQuery (Inicializada apenas uma vez, deve permanecer desligada)\n
-- flatfile_load_transform_data: Faz a carga e transformação dos dados da origem até o BigQuery\n
-- refined_datamarts: Criar o datamart de vendas dentro da camada REFINED\n
+ <li><h3>DAGS</h3></li>
 
+- [x] flatfile_create_table: Cria as tabelas do BigQuery (Inicializada apenas uma vez, deve permanecer desligada)
+- [x] flatfile_load_transform_data: Faz a carga e transformação dos dados da origem até o BigQuery
 
 <h2 id="ingestão"> INGESTÃO </h2>   
 
