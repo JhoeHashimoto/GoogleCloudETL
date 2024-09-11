@@ -552,6 +552,9 @@ def run(codigo_tabela, tabela_origem, bigquery_dataset_land, bigquery_dataset_ra
 
     sql_cast_columns = ""
     sql_columns_datalake = ""
+
+    # variáveis que contém os jsons de referencia para os nomes das colunas e para o tipo dos dados
+    # abre as chave do json
     sql_df_new_column_names = "{"
     sql_dtypes = "{"
 
@@ -569,16 +572,21 @@ def run(codigo_tabela, tabela_origem, bigquery_dataset_land, bigquery_dataset_ra
 
         sql_cast_columns         = sql_cast_columns + coluna_concat_cast
         sql_columns_datalake     = sql_columns_datalake + column_name_datalake + ','
+        # recebe os respectivos dados
         sql_df_new_column_names  = sql_df_new_column_names + df_new_column_names
         sql_dtypes               = sql_dtypes + coluna_dtype
 
+    # tira a última vírgula e fecha as chaves do json
     sql_df_new_column_names = sql_df_new_column_names[:-1]
     sql_df_new_column_names = sql_df_new_column_names + "}"
     sql_dtypes              = sql_dtypes[:-1]
     sql_dtypes              = sql_dtypes + "}"
 
+    # substitue as aspas simples por aspas duplas
     sql_df_new_column_names = sql_df_new_column_names.replace("'",'"')
     sql_dtypes = sql_dtypes.replace("'",'"')
+
+     # método .loads que converte a string em um json
     new_column_names = json.loads(sql_df_new_column_names)
     dtypes = json.loads(sql_dtypes)
     separator = ';'
