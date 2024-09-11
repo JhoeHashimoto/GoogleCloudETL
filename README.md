@@ -9,7 +9,7 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 
 <h2 id="arquitetura"> ARQUITETURA </h2>
 
-![image](https://github.com/user-attachments/assets/c8fbf4d3-413b-4e82-b09c-aeeea1a638c5)
+![arquitetura](https://github.com/user-attachments/assets/8050d302-50f5-46cf-bece-fd125f49dfed)
 
 [Link para o Miro Board](https://miro.com/app/board/uXjVKoI0Df8=/?diagramming=)
 
@@ -23,18 +23,35 @@ Fazer a Ingestão de 6 FlatFiles (.CSV) para criação de um Data Mart de VENDAS
 | <kbd>Compute Engine</kbd>     | Hospedagem do Airflow
 | <kbd>Airflow</kbd>     | Orquestrador dos Jobs
 | <kbd>Cloud Functions</kbd>     | Extração da Aplicação para o Bucket
-| <kbd>DataFlow</kbd>     | Jobs do Bucket até O BigQuery
+| <kbd>API</kbd>     | Job de carregamento do Bucket para o Big Query
 | <kbd>MySQL</kbd>     | Banco usado para a tabela de controle
 | <kbd>Secret Manager</kbd>     | Gerenciar os segredos
 | <kbd>Cloud Functions</kbd>     | Ingestão de Produção (Bucket 2 Bucket)
 | <kbd>PowerBI</kbd>     | Visualização de painél de indicadores do Datamart
 
 <h2 id="ingestão"> AIRFLOW </h2>
- <li><h3>DAGS</h3></li>
+Passo a passo para acessar a interface visual do airflow<br/>
+<br/>
+1 - Acesse a máquina virtual 'airflow-vm' no ambiente do google cloud por meio do protocolo SSH. (Caso a máquina se encontre desligada, ligue-a)<br/>
+2 - No terminal, digite os seguintes comandos:<br/>
+
+
+```
+sudo su
+cd /home/airflow
+source venv/bin/activate
+export AIRFLOW_HOME=/home/airflow
+airflow standalone
+```
+3 - Com o servidor inicializado, acesse o ambiente no navegador com o ip público da vm na porta 8080. ex.: 35.199.13.106:8080<br/>
+4 - Na tela de login, entre com as seguintes credenciais: -user: admin
+-senha: 2DX7ZMNNapYH4ANE
+
+ <h3>DAGS</h3>
 
 - [x] flatfile_create_table: Cria as tabelas do BigQuery (Inicializada apenas uma vez, deve permanecer desligada)
 - [x] flatfile_load_transform_data: Faz a carga e transformação dos dados da origem até o BigQuery
-- [x] refined_datamart: Cria as tabelas do datamart na camada REFINED
+- [x] refined_datamart: Cria as tabelas do datamart na camada REFINED. Somente inicializada após o término bem-sucedido da DAG anterior. 
 ![Captura de tela 2024-09-05 124606](https://github.com/user-attachments/assets/648dc914-0dd0-408f-aef8-66ccab987f48)
 
 
