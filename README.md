@@ -47,11 +47,15 @@ airflow standalone
 4 - Na tela de login, entre com as seguintes credenciais: -user: admin
 -senha: 2DX7ZMNNapYH4ANE
 
- <h3>DAGS</h3>
+<ul>
+ <li>
+ <h3>DAGS</h3> 
+ </li>
+</ul>
 
 - [x] flatfile_create_table: Cria as tabelas do BigQuery (Inicializada apenas uma vez, deve permanecer desligada)
 - [x] flatfile_load_transform_data: Faz a carga e transformação dos dados da origem até o BigQuery
-- [x] refined_datamart: Cria as tabelas do datamart na camada REFINED. Somente inicializada após o término bem-sucedido da DAG anterior. 
+- [x] refined_datamart: Cria as tabelas do datamart na camada REFINED. Somente inicializada após o término bem-sucedido da DAG anterior.
 ![Captura de tela 2024-09-05 124606](https://github.com/user-attachments/assets/648dc914-0dd0-408f-aef8-66ccab987f48)
 
 
