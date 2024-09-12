@@ -200,6 +200,7 @@ def getFileBucket(file_name):
                 
 
 def csv_to_parquet(csv_file, parquet_file, header_row, start_row, rename_columns, dtypes, codigo_tabela):
+    # caminho onde o arquivo .parquet será baixado
     parquet_file = raw_path_file + parquet_file
 
     df = pd.read_csv(io.BytesIO(csv_file),  delimiter=';')
@@ -213,6 +214,8 @@ def csv_to_parquet(csv_file, parquet_file, header_row, start_row, rename_columns
     #}
     new_column_names = rename_columns
 
+
+    # renomeia as colunas do dataframe
     df = df.rename(columns=new_column_names)
 
     # Set data types
@@ -220,12 +223,16 @@ def csv_to_parquet(csv_file, parquet_file, header_row, start_row, rename_columns
     #    'id_colaborador': 'string',
     #    'nome_colaborador': 'string'
     #}
+
+    # faz a tipagem dos dados
     df = df.astype(dtypes)
 
+    # converte o dataframe para parquet
     df.to_parquet(parquet_file, engine='pyarrow')
 
     logging.info(f'Csv file {csv_file} successfully converted to Parquet file {parquet_file}.')
 
+    # com o arquivo parquet no diretório da vm, chama a função responsável por popular o bigquery
     loadBigQuery(codigo_tabela)
 
 
@@ -257,6 +264,7 @@ def loadBigQuery(codigo_tabela):
     column_schema_bq_list = ""
     list_colunas_schema = []
 
+    # seleciono todos os tipos de dados presentes na minha coluna
     query_mapping = text(" SELECT DISTINCT tm.data_type FROM controle_etl.table_mapping tm WHERE tm.codigo_tabela=:codigo_tabela ")
     tabela_types = conexaoMySQL.execute(query_mapping, {"codigo_tabela": codigo_tabela})
     rows_tabela_types_mysql = tabela_types.fetchall()
@@ -266,10 +274,12 @@ def loadBigQuery(codigo_tabela):
     for dados_types in rows_tabela_types_mysql:
         array_tabela_types.append(np.array(dados_types))
 
+    # contém dados como query de cast das colunas, schema das colunas, nome da coluna no bigquery
     rows_tabela_schemas_mysql = []
     column_name_dtype = ""
     i = 0
 
+    # faz uma tratativa para cada tipo de dado encontrado na tabela
     for data_type in array_tabela_types:
         if data_type == 'date':
             query = " SELECT CONCAT('CASE WHEN ', lower(tm.column_name_datalake), ' = '' '' OR ', lower(tm.column_name_datalake), ' = ''-'' THEN NULL ELSE CAST(SUBSTR(',lower(tm.column_name_datalake),', 0, 10) AS ' ,td.datatype_destino, ') END as ',lower(tm.column_name_datalake),',') as coluna_concat_cast,tm.column_name_datalake as  column_name_datalake, REPLACE(CONCAT('bigquery.SchemaField(#',tm.column_name_datalake,'#,#STRING#),'),'#','''') as column_schema_bq, tm.ordinal_position as ordinal_position  FROM controle_etl.table_mapping tm, transform_datatype td  WHERE tm.codigo_tabela=:codigo_tabela AND lower(tm.data_type) = 'date' AND lower(tm.data_type) = lower(td.datatype_origem) order by tm.ordinal_position "
@@ -315,7 +325,7 @@ def loadBigQuery(codigo_tabela):
                 i += 1
             else:
                 pass
-
+        
     rows_tabela_schemas_mysql = pd.DataFrame(rows_tabela_schemas_mysql, columns=['coluna_concat_cast', 'column_name_datalake', 'column_schema_bq', 'ordinal_position'])
     rows_tabela_schemas_mysql['ordinal_position'] = rows_tabela_schemas_mysql['ordinal_position'].astype('int')
     rows_tabela_schemas_mysql = rows_tabela_schemas_mysql.sort_values(by='ordinal_position')
@@ -326,8 +336,14 @@ def loadBigQuery(codigo_tabela):
         column_schema_bq                = dados_schemas['column_schema_bq']
         teste = column_schema_bq[:-1]
         list_colunas_schema.append(f'{teste}')
+
+        # query de cast das colunas pra a trusted
         sql_colunas_trusted = sql_colunas_trusted + coluna_concat_cast
+
+        # query de cast das colunas para a raw
         sql_colunas_raw     = sql_colunas_raw + column_name_datalake + ','
+
+        # schema das colunas no bq
         column_schema_bq = column_schema_bq.replace("'",'"')
         sql_colunas_schema = sql_colunas_schema + column_schema_bq
 
@@ -336,15 +352,19 @@ def loadBigQuery(codigo_tabela):
 
     client_bq = connectionGoogleBigQuery()
 
+    # cria uma referência para a tabela da land
     table_ref = client_bq.dataset(bigquery_dataset_land).table(bigquery_dataset_tabela)
 
+    # parâmetros do job
     job_config = bigquery.LoadJobConfig(
         source_format=bigquery.SourceFormat.PARQUET,
         write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
     )
 
+    # caminho do arquivo parquet
     path_raw_parquet = "/home/airflow/raw/flatfile/" + parquet_file
 
+    # abre o arquivo e carrega ele para a tabela referenciada no bigquery
     with open(path_raw_parquet, "rb") as source_file:
         job = client_bq.load_table_from_file(
             source_file, table_ref, job_config=job_config
@@ -353,6 +373,7 @@ def loadBigQuery(codigo_tabela):
     job.result()
 
     try:
+        # atualiza a tabela de controle com os metadados
         logging.info(f"Updating table {bigquery_dataset_land}.{bigquery_dataset_tabela}.")
         query_update = ("UPDATE " + projeto + "." + bigquery_dataset_land + "." + bigquery_dataset_tabela + " SET sys_change_version = 0 , sys_change_operation = 'I', sys_change_creation_version = 0, commit_time = TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 3 HOUR), partition_time = TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 3 HOUR) WHERE partition_time is null ;")
         client_bq.query(query_update)
@@ -365,12 +386,14 @@ def loadBigQuery(codigo_tabela):
         insertMonitoring('UPDATE', f'{bigquery_dataset_land}.{bigquery_dataset_tabela}', codigo_tabela, 'ERROR')
         raise update_error
 
+    # adquire a quantidade de linhas como referência do tamanho da ingestão
     bq_query_quantidade_land = (" SELECT count(*) as quantidade_linhas FROM " + projeto + "." + bigquery_dataset_land + "." + bigquery_dataset_tabela + ";")
     query_job = client_bq.query(bq_query_quantidade_land)
     query_job.result()
     for quantidade_linhas_resultset in query_job:
         quantidade_linhas = quantidade_linhas_resultset['quantidade_linhas']
 
+    # adquire o partition_Time
     bq_query_partition_time_land = (" SELECT max(partition_time) as partition_time FROM " + projeto + "." + bigquery_dataset_land + "." + bigquery_dataset_tabela + ";")
     query_job = client_bq.query(bq_query_partition_time_land)
     query_job.result()
@@ -378,6 +401,7 @@ def loadBigQuery(codigo_tabela):
         partition_time = str(partition_time_resultset['partition_time'])
 
     try:
+        # atualiza a tabela de controle com o partition time obtido da land
         logging.info(f"Updating table controle for table {bigquery_dataset_tabela}.")
         update_query = " UPDATE controle_etl.controle SET partition_time = :partition_time WHERE codigo=:codigo_tabela "
         update_data = { 'partition_time': partition_time, 'codigo_tabela': codigo_tabela }
@@ -393,6 +417,7 @@ def loadBigQuery(codigo_tabela):
         raise controle_error
 
     try:
+        # faz a ingestão de dados da camada raw a partir da land
         logging.info(f"Inserting data into table {bigquery_dataset_raw}.{bigquery_dataset_tabela}.")
         sql_query_raw = ("INSERT INTO " + projeto + "." + bigquery_dataset_raw + "." + bigquery_dataset_tabela + " SELECT sys_change_version, sys_change_operation, sys_change_creation_version, commit_time, " + sql_colunas_raw + "  PARTITION_TIME FROM "  + projeto + "." + bigquery_dataset_land + "." + bigquery_dataset_tabela + ";")
         client_bq.query(sql_query_raw)
@@ -406,8 +431,10 @@ def loadBigQuery(codigo_tabela):
         insertMonitoring('INSERT', f'{bigquery_dataset_raw}.{bigquery_dataset_tabela}', codigo_tabela, 'ERROR')
         raise insert_error
     
+    # verificação do tipo de carga da ingestão
     if tipo_carga == 'full': 
         try:
+            # trunca a tabela da trusted 
             logging.info(f"Truncating table {bigquery_dataset_trusted}.{bigquery_dataset_tabela}.")
             bq_query_truncate_trusted = ("TRUNCATE TABLE " + projeto + "." + bigquery_dataset_trusted + "." + bigquery_dataset_tabela + ";")
             query_job = client_bq.query(bq_query_truncate_trusted)
@@ -422,6 +449,7 @@ def loadBigQuery(codigo_tabela):
             raise truncate_error
 
         try:
+            # faz a ingestão full na camada trusted com o partition time da land
             logging.info(f"Inserting data into table {bigquery_dataset_trusted}.{bigquery_dataset_tabela}.")
             sql_query_trusted = ("INSERT INTO " + projeto + "." + bigquery_dataset_trusted + "." + bigquery_dataset_tabela + "  SELECT " + sql_colunas_trusted + "  PARTITION_TIME FROM "  + projeto + "." + bigquery_dataset_raw + "." + bigquery_dataset_tabela + " WHERE PARTITION_TIME ='" + partition_time + "' ;")
             #print(sql_query_trusted)
@@ -437,6 +465,7 @@ def loadBigQuery(codigo_tabela):
             
     elif tipo_carga == 'incremental':
 
+        # variaveis que vão armazenar as querys de update e insert do merge para cada coluna
         update_columns = ""
         insert_columns = ""
         tabela_colunas_origemdatalake = "" 
@@ -458,6 +487,7 @@ def loadBigQuery(codigo_tabela):
             insert_column_name   = array_columns_bq[0]
             insert_columns  = insert_columns + insert_column_name
         
+        # obtem os nomes das colunas do bq
         sql_query = text(" SELECT CONCAT(lower(tm.column_name_datalake),',') as insert_column FROM table_mapping tm  WHERE tm.codigo_tabela=:codigo_tabela order by tm.ordinal_position " )
         mapping_mysql = conexaoMySQL.execute(sql_query, {"codigo_tabela": codigo_tabela})
         rows_mapping_mysql = mapping_mysql.fetchall()
@@ -468,6 +498,7 @@ def loadBigQuery(codigo_tabela):
             tabela_colunas_origemdatalake  = tabela_colunas_origemdatalake + insert_coluna_nome
 
         try:
+            # realiza o merge na trusted
             logging.info(f"Merging data into table {bigquery_dataset_trusted}.{bigquery_dataset_tabela}.")
             sql_query_trusted = ("MERGE " + projeto + "." + bigquery_dataset_trusted + "." + bigquery_dataset_tabela + " T USING (WITH TABLE_MERGE AS ( SELECT ROW_NUMBER() OVER (PARTITION BY " + tabela_origem_pk + " ORDER BY PARTITION_TIME DESC) AS dense_rank, * FROM " + projeto + "." + bigquery_dataset_raw + "." + bigquery_dataset_tabela + " WHERE partition_time >= '" + partition_time + "'), TABLE_FILTER AS ( SELECT " + sql_colunas_trusted + " partition_time FROM TABLE_MERGE WHERE dense_rank = 1) SELECT DISTINCT * FROM TABLE_FILTER) S ON T." + tabela_origem_pk.lower() + "=S." + tabela_origem_pk.lower() + " WHEN MATCHED THEN UPDATE SET " + update_columns + " T.partition_time = S.partition_time WHEN NOT MATCHED BY SOURCE THEN DELETE WHEN NOT MATCHED BY TARGET THEN INSERT (" + tabela_colunas_origemdatalake + " partition_time) VALUES ( " + insert_columns + " S.partition_time );")
             print(sql_query_trusted)
@@ -486,6 +517,7 @@ def loadBigQuery(codigo_tabela):
 
 
     try:
+        # trunca a land
         logging.info(f"Truncating table {bigquery_dataset_land}.{bigquery_dataset_tabela}.")
         bq_query_truncate_land = ("TRUNCATE TABLE " + projeto + "." + bigquery_dataset_land + "." + bigquery_dataset_tabela + ";")
         query_job = client_bq.query(bq_query_truncate_land)
@@ -514,6 +546,7 @@ def loadBigQuery(codigo_tabela):
     blob_name = source_folder_path + arquivo_origem
     deleteFileGCPBucket(bucket_name, blob_name)
 
+    # apaga os arquivos do diretório local
     delete_files(raw_path_file)
     return "ok"
 
@@ -548,7 +581,6 @@ def run(codigo_tabela, tabela_origem, bigquery_dataset_land, bigquery_dataset_ra
     flatfile_data_linha        = array_tabela_controle[18]
     flatfile_range_coluna      = array_tabela_controle[19]
     parquet_file               = tabela_origem.replace(extensao, 'parquet')
-
 
     sql_cast_columns = ""
     sql_columns_datalake = ""
